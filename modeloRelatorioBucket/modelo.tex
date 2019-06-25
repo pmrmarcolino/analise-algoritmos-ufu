@@ -1,0 +1,336 @@
+\documentclass[12pt,a4paper,twoside]{report}
+% -------------------------------------------------------------------- %
+% Pacotes
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[fixlanguage]{babelbib}
+\usepackage[pdftex]{graphicx}      % usamos arquivos pdf/png como figuras
+\usepackage{setspace}              % espaçamento flexvel
+\usepackage{indentfirst}           % indentação do primeiro parágrafo
+\usepackage{makeidx}               % índice remissivo
+\usepackage[nottoc]{tocbibind}     % acrescentamos a bibliografia/indice/conteudo no Table of Contents
+\usepackage{courier}               % usa o Adobe Courier no lugar de Computer Modern Typewriter
+\usepackage{type1cm}               % fontes realmente escaláveis
+\usepackage{titletoc}
+\usepackage{ucs}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage[usenames,svgnames,dvipsnames]{xcolor}
+\usepackage[a4paper,top=2.54cm,bottom=2.0cm,left=2.0cm,right=2.54cm]{geometry} % margens
+\usepackage{amsmath}
+\usepackage{booktabs} % cria tabelas em formato profissional
+\usepackage[pdftex,plainpages=false,pdfpagelabels,pagebackref,colorlinks=true,citecolor=DarkGreen,
+linkcolor=NavyBlue,urlcolor=DarkRed,filecolor=green,bookmarksopen=true]{hyperref} % links coloridos
+\usepackage[all]{hypcap}                % soluciona o problema com o hyperref e capítulos
+\usepackage[square,sort,nonamebreak,comma]{natbib}  % citação bibliográfica alpha
+\fontsize{60}{62}\usefont{OT1}{cmr}{m}{n}{\selectfont}
+\usepackage{upquote}                    % formata apóstrofes '
+\usepackage{textcomp}
+
+% Para formatar corretamente as URLs
+\usepackage{url}
+% -------------------------------------------------------------------- %
+% Cabeçalhos similares ao TAOCP de Donald E. Knuth
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{#1}}{}}
+\renewcommand{\headrulewidth}{0pt}
+
+\frenchspacing                     % arruma o espaço: id est (i.e.) e exempli gratia (e.g.)
+\urlstyle{same}                    % URL com o mesmo estilo do texto e no mono-spaced
+\makeindex                         % para o índice remissivo
+\raggedbottom                      % para no permitir espaços extras no texto
+\fontsize{60}{62}\usefont{OT1}{cmr}{m}{n}{\selectfont}
+\cleardoublepage
+\normalsize
+
+% -------------------------------------------------------------------- %
+% Cores para formatação de código
+\usepackage{color}
+\definecolor{vermelho}{rgb}{0.6,0,0} % para strings
+\definecolor{verde}{rgb}{0.25,0.5,0.35} % para comentários
+\definecolor{roxo}{rgb}{0.5,0,0.35} % para palavras-chaves
+\definecolor{azul}{rgb}{0.25,0.35,0.75} % para strings
+\definecolor{cinza-claro}{gray}{0.95}
+% -------------------------------------------------------------------- %
+% Opções de listagem usados para o código fonte
+% Ref: http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{listings}           % para formatar código-fonte (ex. em Java)
+
+\lstset{ %
+language=Python,                      % seleciona a linguagem do código
+basicstyle=\footnotesize\ttfamily,    % o tamanho da fonte usado no código
+commentstyle=\color{verde}\bfseries,  % formatação de comentários
+stringstyle=\color{azul},             % formatação de strings
+upquote=true,
+numbers=left,                   % onde colocar os números de linha
+numberstyle=\tiny,  % o tamanho da fonte usada para a numeração das linhas
+stepnumber=1,                   % o intervalo entre dois números de linhas. Se for 1, numera cada uma.
+numbersep=5pt,                  % how far the line-numbers are from the code
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+keywordstyle=\color{roxo}\bfseries,
+keywordstyle=[1]\color{roxo}\bfseries,
+keywordstyle=[2]\color{verde}\bfseries,
+frame=b,                   % adds a frame around the code
+framerule=0.6pt,
+tabsize=2,                      % sets default tabsize to 2 spaces
+captionpos=t,                   % sets the caption-position to top
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)},         % if you want to add a comment within your code
+backgroundcolor=\color[rgb]{1.0,1.0,1.0}, % choose the background color.
+rulecolor=\color[rgb]{0.8,0.8,0.8},
+extendedchars=true,
+xleftmargin=10pt,
+xrightmargin=10pt,
+framexleftmargin=10pt,
+framexrightmargin=10pt,
+literate={â}{{\^{a}}}1  % para formatar corretamente os acentos do Português ao usar utf8
+    {ê}{{\^{e}}}1
+    {ô}{{\^{o}}}1
+    {Â}{{\^{A}}}1
+    {Ê}{{\^{E}}}1
+    {Ô}{{\^{O}}}1
+    {á}{{\'{a}}}1
+    {é}{{\'{e}}}1
+    {í}{{\'{i}}}1
+    {ó}{{\'{o}}}1
+    {ú}{{\'{u}}}1
+    {Á}{{\'{A}}}1
+    {É}{{\'{E}}}1
+    {Í}{{\'{I}}}1
+    {Ó}{{\'{O}}}1
+    {Ú}{{\'{U}}}1
+    {à}{{\`{a}}}1
+    {À}{{\`{A}}}1
+    {ã}{{\~{a}}}1
+    {õ}{{\~{o}}}1
+    {Ã}{{\~{A}}}1
+    {Õ}{{\~{O}}}1
+    {ç}{{\c{c}}}1
+    {Ç}{{\c{C}}}1
+    {ü}{{\"u}}1
+    {Ü}{{\"U}}1
+}
+
+\renewcommand{\lstlistingname}{Listagem}
+\renewcommand{\lstlistlistingname}{Lista de Listagens}
+
+% \captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+\title{Análise experimental de algoritmos usando Python}
+\author{Patrícia Mariana Ramos Marcolino \\
+\texttt{\small \url{pmrmarcolino@hotmail.com}}
+\vspace{1cm} \\
+Eduardo Pinheiro Barbosa\\
+\texttt{\small \url{eduardptu@hotmail.com}}
+\vspace{1cm} \\
+Faculdade de Computação \\
+Universidade Federal de Uberlândia
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+% -------------------------------------------------------------------- %
+% Listas de figuras, tabelas e códigos criadas automaticamente
+\listoffigures
+\listoftables
+\lstlistoflistings
+% -------------------------------------------------------------------- %
+
+% -------------------------------------------------------------------- %
+% Sumário
+\tableofcontents
+% cabeçalho para as páginas de todos os capítulos
+\fancyhead[RE,LO]{\thesection}
+
+%\singlespacing              % espaçamento simples
+\setlength{\parskip}{0.15in} % espaçamento entre paragráfos
+
+\chapter{Análise}
+
+O algoritmo {\it Bucket Sort} possui tempo linear, desde que
+os valores a serem ordenados sejam distribuídos
+uniformemente sobre o intervalo $[0, 1)$.\\
+O {\it Bucket Sort} divide o intervalo
+[0, 1) em n sub-intervalos iguais, denominados buckets
+(baldes), e então distribui os n números reais nos n
+buckets. Como a entrada é composta por dados
+distribuídos uniformemente, espera-se que cada balde
+possua, ao final deste processo, um número equivalente
+de elementos (usualmente 1).\\
+Para obter o resultado, basta ordenar os elementos em
+cada bucket e então apresentá-los em ordem.\\
+Ordena n números uniformemente
+distribuídos na faixa [0-1) em tempo médio O(n).
+\\Sabendo que o bucket sort não trabalha com o método de comparação, todos os graficos respectivos a essa informação são constantes.
+\chapter{Resultados}
+\section{Tabelas}
+
+\input{../bucketsort/tabelas/bucketsortAleatorio.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortAleatorio0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 2.839\mathrm{e}-5*n-0.00191$ e para o $n =2^{32}$, $T(2^{32}) = 121934.11962344$ 
+\label{fig:bucketsortAleatorio0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortAleatorio1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 1 $ 
+\label{fig:bucketsortAleatorio1}
+\end{figure}
+
+
+\input{../bucketsort/tabelas/bucketsortCrescente.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortCrescente0.png}
+\caption{ A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 1.092\mathrm{e}-5*n-9.822\mathrm{e}-5$ e para o $n =2^{32}$, $T(2^{32}) = 46901.0427741$ 
+\label{fig:bucketsortCrescente0}
+\end{figure}
+
+\input{../bucketsort/tabelas/bucketsortDecrescente.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortDecrescente0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 4.955\mathrm{e}-5*n-0.004879$ e para o $n =2^{32}$, $T(2^{32}) = 212815.6246378$ 
+\label{fig:bucketsortDecrescente0}
+\end{figure}
+
+\input{../bucketsort/tabelas/bucketsortQuaseCresc10.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseCresc100.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 1.146\mathrm{e}-5*n+0.0002222$ e para o $n =2^{32}$, $T(2^{32}) = 49220.32543436$ 
+\label{fig:bucketsortQuaseCresc100}
+\end{figure}
+
+
+\input{../bucketsort/tabelas/bucketsortQuaseCresc20.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseCresc200.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 1.287\mathrm{e}-5*n-0.0001216$ e para o $n =2^{32}$, $T(2^{32}) = 55276.22897792$ 
+\label{fig:bucketsortQuaseCresc200}
+\end{figure}
+
+\clearpage
+\input{../bucketsort/tabelas/bucketsortQuaseCresc30.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseCresc300.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 1.373\mathrm{e}-5*n-0.0001417$ e para o $n =2^{32}$, $T(2^{32}) = 58969.90083238$ 
+\label{fig:bucketsortQuaseCresc300}
+\end{figure}
+
+
+\input{../bucketsort/tabelas/bucketsortQuaseCresc40.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseCresc400.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 1.555\mathrm{e}-5*n-0.0006026$ e para o $n =2^{32}$, $T(2^{32}) = 66786.7408502$ 
+\label{fig:bucketsortQuaseCresc400}
+\end{figure}
+
+\input{../bucketsort/tabelas/bucketsortQuaseCresc50.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseCresc500.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 1.562\mathrm{e}-5*n-0.0004459$ e para o $n =2^{32}$, $T(2^{32}) =  67087.38871762$ 
+\label{fig:bucketsortQuaseCresc500}
+\end{figure}
+
+\input{../bucketsort/tabelas/bucketsortQuaseDecresc10.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseDecresc100.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 4.956\mathrm{e}-5*n-0.005513$ e para o $n =2^{32}$, $T(2^{32}) = 212858.57367676 $ 
+\label{fig:bucketsortQuaseDecresc100}
+\end{figure}
+
+
+\input{../bucketsort/tabelas/bucketsortQuaseDecresc20.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseDecresc200.png}
+\caption{EA análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 5.032\mathrm{e}-5*n-0.005975$ e para o $n =2^{32}$, $T(2^{32}) = 216122.74835972$ 
+\label{fig:bucketsortQuaseDecresc200}
+\end{figure}
+
+\clearpage
+\input{../bucketsort/tabelas/bucketsortQuaseDecresc30.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseDecresc300.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 4.468\mathrm{e}-5*n-0.004343$ e para o $n =2^{32}$, $T(2^{32}) = 191899.13444228$ 
+\label{fig:bucketsortQuaseDecresc300}
+\end{figure}
+
+\input{../bucketsort/tabelas/bucketsortQuaseDecresc40.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseDecresc400.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 4.707\mathrm{e}-5*n-0.005511$ e para o $n =2^{32}$, $T(2^{32}) = 202164.10511172$ 
+\label{fig:bucketsortQuaseDecresc400}
+\end{figure}
+
+
+\input{../bucketsort/tabelas/bucketsortQuaseDecresc50.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../bucketsort/imagens/bucketsortQuaseDecresc500.png}
+\caption{EA análise do grafico para $2^{32}$ segue abaixo para bucketsort}
+
+Tendo a função $T(n) = 4.275\mathrm{e}-5*n-0.003819$ e para o $n =2^{32}$, $T(2^{32}) = 183609.848085$ 
+\end{figure}
+
+
+\clearpage
+\clearpage
+\addcontentsline{toc}{part}{Apêndice}
+\appendix
+
+\chapter{Arquivo ../bucketsort/bucketsort.py \label{ap:bucketsort}}
+\lstinputlisting[caption={../bucketsort/bucketsort.py \label{arq:bucketsort}}]{../bucketsort/bucketsort.py}
+
+\chapter{Arquivo ../bucketsort/ensaio.py \label{ap:bucketsortensaio}}
+\lstinputlisting[caption={../bucketsort/ensaio.py \label{arq:bucketsortensaio}}]{../bucketsort/ensaio.py}
+
+\end{document}

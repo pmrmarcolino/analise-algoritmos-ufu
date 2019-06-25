@@ -1,0 +1,408 @@
+\documentclass[12pt,a4paper,twoside]{report}
+% -------------------------------------------------------------------- %
+% Pacotes
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[fixlanguage]{babelbib}
+\usepackage[pdftex]{graphicx}      % usamos arquivos pdf/png como figuras
+\usepackage{setspace}              % espaçamento flexvel
+\usepackage{indentfirst}           % indentação do primeiro parágrafo
+\usepackage{makeidx}               % índice remissivo
+\usepackage[nottoc]{tocbibind}     % acrescentamos a bibliografia/indice/conteudo no Table of Contents
+\usepackage{courier}               % usa o Adobe Courier no lugar de Computer Modern Typewriter
+\usepackage{type1cm}               % fontes realmente escaláveis
+\usepackage{titletoc}
+\usepackage{ucs}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage[usenames,svgnames,dvipsnames]{xcolor}
+\usepackage[a4paper,top=2.54cm,bottom=2.0cm,left=2.0cm,right=2.54cm]{geometry} % margens
+\usepackage{amsmath}
+\usepackage{booktabs} % cria tabelas em formato profissional
+\usepackage[pdftex,plainpages=false,pdfpagelabels,pagebackref,colorlinks=true,citecolor=DarkGreen,
+linkcolor=NavyBlue,urlcolor=DarkRed,filecolor=green,bookmarksopen=true]{hyperref} % links coloridos
+\usepackage[all]{hypcap}                % soluciona o problema com o hyperref e capítulos
+\usepackage[square,sort,nonamebreak,comma]{natbib}  % citação bibliográfica alpha
+\fontsize{60}{62}\usefont{OT1}{cmr}{m}{n}{\selectfont}
+\usepackage{upquote}                    % formata apóstrofes '
+\usepackage{textcomp}
+
+% Para formatar corretamente as URLs
+\usepackage{url}
+% -------------------------------------------------------------------- %
+% Cabeçalhos similares ao TAOCP de Donald E. Knuth
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{#1}}{}}
+\renewcommand{\headrulewidth}{0pt}
+
+\frenchspacing                     % arruma o espaço: id est (i.e.) e exempli gratia (e.g.)
+\urlstyle{same}                    % URL com o mesmo estilo do texto e no mono-spaced
+\makeindex                         % para o índice remissivo
+\raggedbottom                      % para no permitir espaços extras no texto
+\fontsize{60}{62}\usefont{OT1}{cmr}{m}{n}{\selectfont}
+\cleardoublepage
+\normalsize
+
+% -------------------------------------------------------------------- %
+% Cores para formatação de código
+\usepackage{color}
+\definecolor{vermelho}{rgb}{0.6,0,0} % para strings
+\definecolor{verde}{rgb}{0.25,0.5,0.35} % para comentários
+\definecolor{roxo}{rgb}{0.5,0,0.35} % para palavras-chaves
+\definecolor{azul}{rgb}{0.25,0.35,0.75} % para strings
+\definecolor{cinza-claro}{gray}{0.95}
+% -------------------------------------------------------------------- %
+% Opções de listagem usados para o código fonte
+% Ref: http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{listings}           % para formatar código-fonte (ex. em Java)
+
+\lstset{ %
+language=Python,                      % seleciona a linguagem do código
+basicstyle=\footnotesize\ttfamily,    % o tamanho da fonte usado no código
+commentstyle=\color{verde}\bfseries,  % formatação de comentários
+stringstyle=\color{azul},             % formatação de strings
+upquote=true,
+numbers=left,                   % onde colocar os números de linha
+numberstyle=\tiny,  % o tamanho da fonte usada para a numeração das linhas
+stepnumber=1,                   % o intervalo entre dois números de linhas. Se for 1, numera cada uma.
+numbersep=5pt,                  % how far the line-numbers are from the code
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+keywordstyle=\color{roxo}\bfseries,
+keywordstyle=[1]\color{roxo}\bfseries,
+keywordstyle=[2]\color{verde}\bfseries,
+frame=b,                   % adds a frame around the code
+framerule=0.6pt,
+tabsize=2,                      % sets default tabsize to 2 spaces
+captionpos=t,                   % sets the caption-position to top
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)},         % if you want to add a comment within your code
+backgroundcolor=\color[rgb]{1.0,1.0,1.0}, % choose the background color.
+rulecolor=\color[rgb]{0.8,0.8,0.8},
+extendedchars=true,
+xleftmargin=10pt,
+xrightmargin=10pt,
+framexleftmargin=10pt,
+framexrightmargin=10pt,
+literate={â}{{\^{a}}}1  % para formatar corretamente os acentos do Português ao usar utf8
+    {ê}{{\^{e}}}1
+    {ô}{{\^{o}}}1
+    {Â}{{\^{A}}}1
+    {Ê}{{\^{E}}}1
+    {Ô}{{\^{O}}}1
+    {á}{{\'{a}}}1
+    {é}{{\'{e}}}1
+    {í}{{\'{i}}}1
+    {ó}{{\'{o}}}1
+    {ú}{{\'{u}}}1
+    {Á}{{\'{A}}}1
+    {É}{{\'{E}}}1
+    {Í}{{\'{I}}}1
+    {Ó}{{\'{O}}}1
+    {Ú}{{\'{U}}}1
+    {à}{{\`{a}}}1
+    {À}{{\`{A}}}1
+    {ã}{{\~{a}}}1
+    {õ}{{\~{o}}}1
+    {Ã}{{\~{A}}}1
+    {Õ}{{\~{O}}}1
+    {ç}{{\c{c}}}1
+    {Ç}{{\c{C}}}1
+    {ü}{{\"u}}1
+    {Ü}{{\"U}}1
+}
+
+\renewcommand{\lstlistingname}{Listagem}
+\renewcommand{\lstlistlistingname}{Lista de Listagens}
+
+% \captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+\title{Análise experimental de algoritmos usando Python}
+\author{Patricia Mariana Ramos Marcolino\\
+\texttt{\small \url{pmrmarcolino@hotmail.com}}
+\vspace{1cm} \\
+Eduardo Pinheiro Barbosa \\
+\texttt{\small \url{eduardptu@hotmail.com}}
+\vspace{1cm} \\
+Faculdade de Computação \\
+Universidade Federal de Uberlândia
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+% -------------------------------------------------------------------- %
+% Listas de figuras, tabelas e códigos criadas automaticamente
+\listoffigures
+\listoftables
+\lstlistoflistings
+% -------------------------------------------------------------------- %
+
+% -------------------------------------------------------------------- %
+% Sumário
+\tableofcontents
+% cabeçalho para as páginas de todos os capítulos
+\fancyhead[RE,LO]{\thesection}
+
+%\singlespacing              % espaçamento simples
+\setlength{\parskip}{0.15in} % espaçamento entre paragráfos
+
+\chapter{Análise}
+\subsection{Introdução}
+O mergesort, é um algoritmo de ordenação que pode ser obtido especializando a formulação recursiva da divisão e onquista binária, onde divide todo o vetor usando recursividade até chegar ao caso base. após chegar ao caso base ele vem desempilhando comparando menores massas de dados. \\
+Ideia básica:\\
+Dividir:  dividir a lista em duas listas com cerca da metade do tamanho.\\
+Conquistar:  dividir  cada  uma  das  d uas  sublistas  recursivamente  até  que  tenham  tamanho um.\\
+Combinar:  fundir as duas sublistas de volta em uma lista ordenada.
+
+\subsection{Desempenho do mergesort} 
+Primeiramente vamos definir o que é melhor, médio e pior caso para o MergeSort. \\
+Melhor Caso  – nunca é necessário trocar após comparações. \\
+Médio Caso  – há necessidade de haver troca após comparações.\\ 
+Pior Caso  – sempre é necessário trocar após comparações.\\
+P ara o MergeSort não tem tanta importância se o vetor está no melhor, médio ou pior  caso, porque para qualquer que seja o caso ele sempre terá a complexidade de ordem  \[n*logn\]
+
+\chapter{Resultados}
+\section{Tabelas}
+
+\input{../mergesort/tabelas/mergesortAleatorio.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortAleatorio0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor aleatorio.\\
+Tendo a função $T(n) = 5.3001*n*ln(n)-0.0075$ e para o $n =2^{32}$, $T(2^{32}) = 5.04916 * 10^{11}$}
+\label{fig:mergesortAleatorio0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortAleatorio1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor aleatorio.\\
+Tendo a função $T(n) = 0.1108*n*ln(n)+138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05554 * 10^{10}$}
+\label{fig:mergesortAleatorio1}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortCrescente.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortCrescente0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor crescente.\\
+Tendo a função $T(n) = 5.2118\mathrm{e}-6*n*ln(n)-0.00719$ e para o $n =2^{32}$, $T(2^{32}) = 4.96504 * 10^{5}$}
+\label{fig:mergesortCrescente0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortCrescente1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor crescente.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortCrescente1}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortDecrescente.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortDecrescente0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor decrescente.\\
+Tendo a função $T(n) = 5.2187\mathrm{e}-6*n*ln(n)-0.00706$ e para o $n =2^{32}$, $T(2^{32}) = 4.97162 * 10^{5}$}
+\label{fig:mergesortDecrescente0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortDecrescente1.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor crescente.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortQuaseCresc10.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc100.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 10\%.\\
+Tendo a função $T(n) = 5.2357\mathrm{e}-6*n*ln(n)-0.0073$ e para o $n =2^{32}$, $T(2^{32}) = 4.98781 * 10^{5}$}
+\label{fig:mergesortQuaseCresc100}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc101.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 10\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseCresc101}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortQuaseCresc20.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc200.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 20\%.\\
+Tendo a função $T(n) = 5.1840\mathrm{e}-6*n*ln(n)-0.0066$ e para o $n =2^{32}$, $T(2^{32}) = 4.93856 * 10^{5}$}
+\label{fig:mergesortQuaseCresc200}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc201.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 20\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseCresc201}
+\end{figure}
+
+\clearpage
+\input{../mergesort/tabelas/mergesortQuaseCresc30.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc300.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 30\%.\\
+Tendo a função $T(n) = 5.2132\mathrm{e}-6*n*ln(n)-0.007$ e para o $n =2^{32}$, $T(2^{32}) = 4.96638 * 10^{5}$}
+\label{fig:mergesortQuaseCresc300}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc301.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 30\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseCresc301}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortQuaseCresc40.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc400.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 40\%.\\
+Tendo a função $T(n) = 5.1550\mathrm{e}-6*n*ln(n)-0.0065$ e para o $n =2^{32}$, $T(2^{32}) = 4.91093 * 10^{5}$}
+\label{fig:mergesortQuaseCresc400}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc401.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 40\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseCresc401}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortQuaseCresc50.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc500.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 50\%.\\
+Tendo a função $T(n) = 5.2286\mathrm{e}-6*n*ln(n)-0.0071$ e para o $n =2^{32}$, $T(2^{32}) = 498105$}
+\label{fig:mergesortQuaseCresc500}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseCresc501.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase crescente 50\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseCresc501}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortQuaseDecresc10.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc100.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 10\%.\\
+Tendo a função $T(n) = 5.1842\mathrm{e}-6*n*ln(n)-0.0068$ e para o $n =2^{32}$, $T(2^{32}) = 4.93875 * 10^{5}$}
+\label{fig:mergesortQuaseDecresc100}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc101.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 10\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseDecresc101}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortQuaseDecresc20.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc200.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 20\%.\\
+Tendo a função $T(n) = 5.4214\mathrm{e}-6*n*ln(n)-0.0077$ e para o $n =2^{32}$, $T(2^{32}) = 5.16472 * 10^{5}$}
+\label{fig:mergesortQuaseDecresc200}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc201.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 20\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseDecresc201}
+\end{figure}
+
+\clearpage
+\input{../mergesort/tabelas/mergesortQuaseDecresc30.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc300.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 30\%.\\
+Tendo a função $T(n) = 5.1706\mathrm{e}-6*n*ln(n)-0.0067$ e para o $n =2^{32}$, $T(2^{32}) = 4.92579 * 10^{5}$}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc301.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 30\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseDecresc301}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortQuaseDecresc40.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc400.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 30\%.\\
+Tendo a função $T(n) = 5.1621\mathrm{e}-6*n*ln(n)-0.0089$ e para o $n =2^{32}$, $T(2^{32}) = 4.91770 * 10^{5}$}
+\label{fig:mergesortQuaseDecresc400}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc401.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 40\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseDecresc401}
+\end{figure}
+
+
+\input{../mergesort/tabelas/mergesortQuaseDecresc50.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc500.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 30\%.\\
+Tendo a função $T(n) = 5.2936\mathrm{e}-6*n*ln(n)-0.0075$ e para o $n =2^{32}$, $T(2^{32}) = 5.04297 * 10^{5}$}
+\label{fig:mergesortQuaseDecresc500}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../mergesort/imagens/mergesortQuaseDecresc501.png}
+\caption{A análise numero de comparações do grafico para $2^{32}$ segue abaixo para mergesort de vetor quase decrescente 50\%.\\
+Tendo a função $T(n) = 0.11083*n*ln(n)-138.4156$ e para o $n =2^{32}$, $T(2^{32}) = 1.05583 * 10^{10}$}
+\label{fig:mergesortQuaseDecresc501}
+\end{figure}
+
+
+\clearpage
+\clearpage
+\addcontentsline{toc}{part}{Apêndice}
+\appendix
+
+\chapter{Arquivo ../mergesort/mergesort.py \label{ap:mergesort}}
+\lstinputlisting[caption={../mergesort/mergesort.py \label{arq:mergesort}}]{../mergesort/mergesort.py}
+
+\chapter{Arquivo ../mergesort/ensaio.py \label{ap:mergesortensaio}}
+\lstinputlisting[caption={../mergesort/ensaio.py \label{arq:mergesortensaio}}]{../mergesort/ensaio.py}
+
+\end{document}

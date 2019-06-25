@@ -1,0 +1,446 @@
+\documentclass[12pt,a4paper,twoside]{report}
+% -------------------------------------------------------------------- %
+% Pacotes
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[fixlanguage]{babelbib}
+\usepackage[pdftex]{graphicx}      % usamos arquivos pdf/png como figuras
+\usepackage{setspace}              % espaçamento flexvel
+\usepackage{indentfirst}           % indentação do primeiro parágrafo
+\usepackage{makeidx}               % índice remissivo
+\usepackage[nottoc]{tocbibind}     % acrescentamos a bibliografia/indice/conteudo no Table of Contents
+\usepackage{courier}               % usa o Adobe Courier no lugar de Computer Modern Typewriter
+\usepackage{type1cm}               % fontes realmente escaláveis
+\usepackage{titletoc}
+\usepackage{ucs}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage[usenames,svgnames,dvipsnames]{xcolor}
+\usepackage[a4paper,top=2.54cm,bottom=2.0cm,left=2.0cm,right=2.54cm]{geometry} % margens
+\usepackage{amsmath}
+\usepackage{booktabs} % cria tabelas em formato profissional
+\usepackage[pdftex,plainpages=false,pdfpagelabels,pagebackref,colorlinks=true,citecolor=DarkGreen,
+linkcolor=NavyBlue,urlcolor=DarkRed,filecolor=green,bookmarksopen=true]{hyperref} % links coloridos
+\usepackage[all]{hypcap}                % soluciona o problema com o hyperref e capítulos
+\usepackage[square,sort,nonamebreak,comma]{natbib}  % citação bibliográfica alpha
+\fontsize{60}{62}\usefont{OT1}{cmr}{m}{n}{\selectfont}
+\usepackage{upquote}                    % formata apóstrofes '
+\usepackage{textcomp}
+
+% Para formatar corretamente as URLs
+\usepackage{url}
+% -------------------------------------------------------------------- %
+% Cabeçalhos similares ao TAOCP de Donald E. Knuth
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{#1}}{}}
+\renewcommand{\headrulewidth}{0pt}
+
+\frenchspacing                     % arruma o espaço: id est (i.e.) e exempli gratia (e.g.)
+\urlstyle{same}                    % URL com o mesmo estilo do texto e no mono-spaced
+\makeindex                         % para o índice remissivo
+\raggedbottom                      % para no permitir espaços extras no texto
+\fontsize{60}{62}\usefont{OT1}{cmr}{m}{n}{\selectfont}
+\cleardoublepage
+\normalsize
+
+% -------------------------------------------------------------------- %
+% Cores para formatação de código
+\usepackage{color}
+\definecolor{vermelho}{rgb}{0.6,0,0} % para strings
+\definecolor{verde}{rgb}{0.25,0.5,0.35} % para comentários
+\definecolor{roxo}{rgb}{0.5,0,0.35} % para palavras-chaves
+\definecolor{azul}{rgb}{0.25,0.35,0.75} % para strings
+\definecolor{cinza-claro}{gray}{0.95}
+% -------------------------------------------------------------------- %
+% Opções de listagem usados para o código fonte
+% Ref: http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{listings}           % para formatar código-fonte (ex. em Java)
+
+\lstset{ %
+language=Python,                      % seleciona a linguagem do código
+basicstyle=\footnotesize\ttfamily,    % o tamanho da fonte usado no código
+commentstyle=\color{verde}\bfseries,  % formatação de comentários
+stringstyle=\color{azul},             % formatação de strings
+upquote=true,
+numbers=left,                   % onde colocar os números de linha
+numberstyle=\tiny,  % o tamanho da fonte usada para a numeração das linhas
+stepnumber=1,                   % o intervalo entre dois números de linhas. Se for 1, numera cada uma.
+numbersep=5pt,                  % how far the line-numbers are from the code
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+keywordstyle=\color{roxo}\bfseries,
+keywordstyle=[1]\color{roxo}\bfseries,
+keywordstyle=[2]\color{verde}\bfseries,
+frame=b,                   % adds a frame around the code
+framerule=0.6pt,
+tabsize=2,                      % sets default tabsize to 2 spaces
+captionpos=t,                   % sets the caption-position to top
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)},         % if you want to add a comment within your code
+backgroundcolor=\color[rgb]{1.0,1.0,1.0}, % choose the background color.
+rulecolor=\color[rgb]{0.8,0.8,0.8},
+extendedchars=true,
+xleftmargin=10pt,
+xrightmargin=10pt,
+framexleftmargin=10pt,
+framexrightmargin=10pt,
+literate={â}{{\^{a}}}1  % para formatar corretamente os acentos do Português ao usar utf8
+    {ê}{{\^{e}}}1
+    {ô}{{\^{o}}}1
+    {Â}{{\^{A}}}1
+    {Ê}{{\^{E}}}1
+    {Ô}{{\^{O}}}1
+    {á}{{\'{a}}}1
+    {é}{{\'{e}}}1
+    {í}{{\'{i}}}1
+    {ó}{{\'{o}}}1
+    {ú}{{\'{u}}}1
+    {Á}{{\'{A}}}1
+    {É}{{\'{E}}}1
+    {Í}{{\'{I}}}1
+    {Ó}{{\'{O}}}1
+    {Ú}{{\'{U}}}1
+    {à}{{\`{a}}}1
+    {À}{{\`{A}}}1
+    {ã}{{\~{a}}}1
+    {õ}{{\~{o}}}1
+    {Ã}{{\~{A}}}1
+    {Õ}{{\~{O}}}1
+    {ç}{{\c{c}}}1
+    {Ç}{{\c{C}}}1
+    {ü}{{\"u}}1
+    {Ü}{{\"U}}1
+}
+
+\renewcommand{\lstlistingname}{Listagem}
+\renewcommand{\lstlistlistingname}{Lista de Listagens}
+
+% \captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+\title{Análise experimental de algoritmos usando Python}
+\author{Patrícia Mariana Ramos Marcolino \\
+\texttt{\small \url{pmrmarcolino@hotmail.com}}
+\vspace{1cm} \\
+Eduardo Pinheiro Barbosa \\
+\texttt{\small \url{eduardptu@hotmail.com}}
+\vspace{1cm} \\
+Faculdade de Computação \\
+Universidade Federal de Uberlândia
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+% -------------------------------------------------------------------- %
+% Listas de figuras, tabelas e códigos criadas automaticamente
+\listoffigures
+\listoftables
+\lstlistoflistings
+% -------------------------------------------------------------------- %
+
+% -------------------------------------------------------------------- %
+% Sumário
+\tableofcontents
+% cabeçalho para as páginas de todos os capítulos
+\fancyhead[RE,LO]{\thesection}
+
+%\singlespacing              % espaçamento simples
+\setlength{\parskip}{0.15in} % espaçamento entre paragráfos
+
+\chapter{Análise}
+O número de comparações é dado pela recorrência:
+\begin{equation}
+    T(n) =
+          \begin{cases}
+                0       & \quad \text{se n = 1}\\
+               T(n − 1) + n − 1  & \quad \text{caso contrario}\\
+          \end{cases}
+\end{equation}
+ 
+Portanto, $\theta(n^2)$ comparações são executadas no pior caso.
+
+Já o número de trocas é dado pela recorrência:
+\begin{equation}
+    T(n) =
+          \begin{cases}
+                0       & \quad \text{se n = 1}\\
+               T(n − 1) + 1  & \quad \text{caso contrario}\\
+          \end{cases}
+\end{equation}
+Portanto, $\theta(n)$ trocas são executadas no pior caso.
+
+
+\chapter{Resultados}
+\section{Tabelas}
+
+\input{../selectionsort/tabelas/selectionsortAleatorio.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortAleatorio0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 5.083\mathrm{e}-07*n^{2}+3.949\mathrm{e}-06*n-0.0052$ e para o $n =2^{32}$, $T(2^{32}) = 9.1376742 * 10^{301}$
+\label{fig:selectionsortAleatorio0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortAleatorio1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortAleatorio1}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortCrescente.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortCrescente0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 5.13\mathrm{e}-07*n^{2}+3.66\mathrm{e}-06*n-0.001034$ e para o $n =2^{32}$, $T(2^{32}) = 9.222165 * 10^{301}$
+\label{fig:selectionsortCrescente0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortCrescente1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortCrescente1}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortDecrescente.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortDecrescente0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.495\mathrm{e}-07*n^{2}+0.00049*n+0.1305$ e para o $n =2^{32}$, $T(2^{32}) = 8.0806306 * 10^{301}$
+\label{fig:selectionsortDecrescente0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortDecrescente1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortDecrescente1}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortQuaseCresc10.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc100.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.592\mathrm{e}-07*n^{2}+0.000284*n-0.09749$ e para o $n =2^{32}$, $T(2^{32}) = 8.25501*10^{301}$
+\label{fig:selectionsortQuaseCresc100}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc101.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseCresc101}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortQuaseCresc20.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc200.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.559\mathrm{e}-07*n^{2}+0.0003108*n-0.11$ e para o $n =2^{32}$, $T(2^{32}) = 8.19568*10^{301}$
+\label{fig:selectionsortQuaseCresc200}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc201.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseCresc201}
+\end{figure}
+
+\clearpage
+\input{../selectionsort/tabelas/selectionsortQuaseCresc30.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc300.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.921\mathrm{e}-07*n^{2}+0.0001324*n-0.04989$ e para o $n =2^{32}$, $T(2^{32}) = 8.84645*10^{301}$
+\label{fig:selectionsortQuaseCresc300}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc301.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseCresc301}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortQuaseCresc40.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc400.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.988\mathrm{e}-07*n^{2}+8.326\mathrm{e}-5*n-0.02995$ e para o $n =2^{32}$, $T(2^{32}) = 8.96689*10^{301}$
+\label{fig:selectionsortQuaseCresc300}
+\label{fig:selectionsortQuaseCresc400}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc401.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseCresc401}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortQuaseCresc50.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc500.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.077\mathrm{e}-07*n^{2}+0.0005248*n-0.1668$ e para o $n =2^{32}$, $T(2^{32}) = 7.32919*10^{301}$
+\label{fig:selectionsortQuaseCresc500}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseCresc501.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseCresc501}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortQuaseDecresc10.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc100.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.881\mathrm{e}-07*n^{2}+0.000251*n-0.05372$ e para o $n =2^{32}$, $T(2^{32}) = 8.77454*10^{301}$
+\label{fig:selectionsortQuaseDecresc100}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc101.png}
+\\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseDecresc101}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortQuaseDecresc20.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc200.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.536\mathrm{e}-07*n^{2}+0.0004207*n-0.1082$ e para o $n =2^{32}$, $T(2^{32}) = 8.15434*10^{301}$
+\label{fig:selectionsortQuaseDecresc200}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc201.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseDecresc201}
+\end{figure}
+
+\clearpage
+\input{../selectionsort/tabelas/selectionsortQuaseDecresc30.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc300.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 4.679*n^{2}-07*n-0.1394$ e para o $n =2^{32}$, $T(2^{32}) =8.411406178020777*10^{308}$
+\label{fig:selectionsortQuaseDecresc201}
+\label{fig:selectionsortQuaseDecresc300}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc301.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseDecresc301}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortQuaseDecresc40.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc400.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 5.153\mathrm{e}-07*n^{2}+8.097\mathrm{e}-5*n-0.01548$ e para o $n =2^{32}$, $T(2^{32}) =9.26351272 * 10^{301}$
+\label{fig:selectionsortQuaseDecresc400}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc401.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseDecresc401}
+\end{figure}
+
+
+\input{../selectionsort/tabelas/selectionsortQuaseDecresc50.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc500.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 5.165\mathrm{e}-07*n^{2}+4.552\mathrm{e}-5*n-0.01919$ e para o $n =2^{32}$, $T(2^{32}) =9.2850850415 * 10^{301}$
+\label{fig:selectionsortQuaseDecresc500}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../selectionsort/imagens/selectionsortQuaseDecresc501.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para selectionsort}
+
+Tendo a função $T(n) = 0.5*n^{2}-0.5*n$ e para o $n =2^{32}$, $T(2^{32}) =8.9884656 * 10^{307}$
+\label{fig:selectionsortQuaseDecresc501}
+\end{figure}
+
+
+\clearpage
+\clearpage
+\addcontentsline{toc}{part}{Apêndice}
+\appendix
+
+\chapter{Arquivo ../selectionsort/selectionsort.py \label{ap:selectionsort}}
+\lstinputlisting[caption={../selectionsort/selectionsort.py \label{arq:selectionsort}}]{../selectionsort/selectionsort.py}
+
+\chapter{Arquivo ../selectionsort/ensaio.py \label{ap:selectionsortensaio}}
+\lstinputlisting[caption={../selectionsort/ensaio.py \label{arq:selectionsortensaio}}]{../selectionsort/ensaio.py}
+
+\end{document}

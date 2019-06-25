@@ -1,0 +1,481 @@
+\documentclass[12pt,a4paper,twoside]{report}
+% -------------------------------------------------------------------- %
+% Pacotes
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[fixlanguage]{babelbib}
+\usepackage[pdftex]{graphicx}      % usamos arquivos pdf/png como figuras
+\usepackage{setspace}              % espaçamento flexvel
+\usepackage{indentfirst}           % indentação do primeiro parágrafo
+\usepackage{makeidx}               % índice remissivo
+\usepackage[nottoc]{tocbibind}     % acrescentamos a bibliografia/indice/conteudo no Table of Contents
+\usepackage{courier}               % usa o Adobe Courier no lugar de Computer Modern Typewriter
+\usepackage{type1cm}               % fontes realmente escaláveis
+\usepackage{titletoc}
+\usepackage{ucs}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage[usenames,svgnames,dvipsnames]{xcolor}
+\usepackage[a4paper,top=2.54cm,bottom=2.0cm,left=2.0cm,right=2.54cm]{geometry} % margens
+\usepackage{amsmath}
+\usepackage{booktabs} % cria tabelas em formato profissional
+\usepackage[pdftex,plainpages=false,pdfpagelabels,pagebackref,colorlinks=true,citecolor=DarkGreen,
+linkcolor=NavyBlue,urlcolor=DarkRed,filecolor=green,bookmarksopen=true]{hyperref} % links coloridos
+\usepackage[all]{hypcap}                % soluciona o problema com o hyperref e capítulos
+\usepackage[square,sort,nonamebreak,comma]{natbib}  % citação bibliográfica alpha
+\fontsize{60}{62}\usefont{OT1}{cmr}{m}{n}{\selectfont}
+\usepackage{upquote}                    % formata apóstrofes '
+\usepackage{textcomp}
+
+% Para formatar corretamente as URLs
+\usepackage{url}
+% -------------------------------------------------------------------- %
+% Cabeçalhos similares ao TAOCP de Donald E. Knuth
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{#1}}{}}
+\renewcommand{\headrulewidth}{0pt}
+
+\frenchspacing                     % arruma o espaço: id est (i.e.) e exempli gratia (e.g.)
+\urlstyle{same}                    % URL com o mesmo estilo do texto e no mono-spaced
+\makeindex                         % para o índice remissivo
+\raggedbottom                      % para no permitir espaços extras no texto
+\fontsize{60}{62}\usefont{OT1}{cmr}{m}{n}{\selectfont}
+\cleardoublepage
+\normalsize
+
+% -------------------------------------------------------------------- %
+% Cores para formatação de código
+\usepackage{color}
+\definecolor{vermelho}{rgb}{0.6,0,0} % para strings
+\definecolor{verde}{rgb}{0.25,0.5,0.35} % para comentários
+\definecolor{roxo}{rgb}{0.5,0,0.35} % para palavras-chaves
+\definecolor{azul}{rgb}{0.25,0.35,0.75} % para strings
+\definecolor{cinza-claro}{gray}{0.95}
+% -------------------------------------------------------------------- %
+% Opções de listagem usados para o código fonte
+% Ref: http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{listings}           % para formatar código-fonte (ex. em Java)
+
+\lstset{ %
+language=Python,                      % seleciona a linguagem do código
+basicstyle=\footnotesize\ttfamily,    % o tamanho da fonte usado no código
+commentstyle=\color{verde}\bfseries,  % formatação de comentários
+stringstyle=\color{azul},             % formatação de strings
+upquote=true,
+numbers=left,                   % onde colocar os números de linha
+numberstyle=\tiny,  % o tamanho da fonte usada para a numeração das linhas
+stepnumber=1,                   % o intervalo entre dois números de linhas. Se for 1, numera cada uma.
+numbersep=5pt,                  % how far the line-numbers are from the code
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+keywordstyle=\color{roxo}\bfseries,
+keywordstyle=[1]\color{roxo}\bfseries,
+keywordstyle=[2]\color{verde}\bfseries,
+frame=b,                   % adds a frame around the code
+framerule=0.6pt,
+tabsize=2,                      % sets default tabsize to 2 spaces
+captionpos=t,                   % sets the caption-position to top
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)},         % if you want to add a comment within your code
+backgroundcolor=\color[rgb]{1.0,1.0,1.0}, % choose the background color.
+rulecolor=\color[rgb]{0.8,0.8,0.8},
+extendedchars=true,
+xleftmargin=10pt,
+xrightmargin=10pt,
+framexleftmargin=10pt,
+framexrightmargin=10pt,
+literate={â}{{\^{a}}}1  % para formatar corretamente os acentos do Português ao usar utf8
+    {ê}{{\^{e}}}1
+    {ô}{{\^{o}}}1
+    {Â}{{\^{A}}}1
+    {Ê}{{\^{E}}}1
+    {Ô}{{\^{O}}}1
+    {á}{{\'{a}}}1
+    {é}{{\'{e}}}1
+    {í}{{\'{i}}}1
+    {ó}{{\'{o}}}1
+    {ú}{{\'{u}}}1
+    {Á}{{\'{A}}}1
+    {É}{{\'{E}}}1
+    {Í}{{\'{I}}}1
+    {Ó}{{\'{O}}}1
+    {Ú}{{\'{U}}}1
+    {à}{{\`{a}}}1
+    {À}{{\`{A}}}1
+    {ã}{{\~{a}}}1
+    {õ}{{\~{o}}}1
+    {Ã}{{\~{A}}}1
+    {Õ}{{\~{O}}}1
+    {ç}{{\c{c}}}1
+    {Ç}{{\c{C}}}1
+    {ü}{{\"u}}1
+    {Ü}{{\"U}}1
+}
+
+\renewcommand{\lstlistingname}{Listagem}
+\renewcommand{\lstlistlistingname}{Lista de Listagens}
+
+% \captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+\title{Análise experimental de algoritmos usando Python}
+\author{Patrícia Mariana Ramos Marcolino \\
+\texttt{\small \url{pmrmarcolino@hotmail.com}}
+\vspace{1cm} \\
+Eduardo Pinheiro Barbosa\\
+\texttt{\small \url{eduardptu@hotmail.com}}
+\vspace{1cm} \\
+Faculdade de Computação \\
+Universidade Federal de Uberlândia
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+% -------------------------------------------------------------------- %
+% Listas de figuras, tabelas e códigos criadas automaticamente
+\listoffigures
+\listoftables
+\lstlistoflistings
+% -------------------------------------------------------------------- %
+
+% -------------------------------------------------------------------- %
+% Sumário
+\tableofcontents
+% cabeçalho para as páginas de todos os capítulos
+\fancyhead[RE,LO]{\thesection}
+
+%\singlespacing              % espaçamento simples
+\setlength{\parskip}{0.15in} % espaçamento entre paragráfos
+
+\chapter{Análise}
+\subsection{Desempenho do quicksort no pior caso}
+Podemos supor que o {\it partition} não consome mais que $5n+6$ unidades de tempo, sendo $n=r-p+1$. Então o consumo de tempo do {\it quicksort} no pior caso, digamos $T(n)$, satisfaz a seguinte recorrência \[T(n) = 5n+7+ max _{\text{0} \leq \text{k} \leq \text{n}} (T(k)+T(n-k)\]
+onde o máximo é tomado sobre todos os possíveis valores de k no intervalos 1.. $n-1$. Podemos supor $T(1)=1$. Assim, por exemplo, $T(2)\leq 10+7+T(1)+T(1)= 19$. Em geral, vamos mostrar que \[T(n) \leq 5n^2\]
+para $n = 1,2,3,...$ a desigualdade é certamente verdadeira quando $n=1,2,3$. Agora suponha que $n>3$ e suponha que a desigualdade vale para $T(i)$ sempre que $i<n$. Teremos então
+
+\[T(n) = 5n+7+max_{k} (T(k) + T(n-k))\]
+\[\leq 5n+7+max_{k} (5*k^2+5(n-k)^2)\]
+\[= 5n+7+5(1 + T(n-1)^2)\]
+\[= 5*n^2 - 5*n+17\]
+\[\leq 5*n^2\]
+
+O terceiro passo da prova segue da seguinte observação: para $n$ fixo e $k$ variando entre 1 e $n-1$, a expressão $k^2+(n-k)^2$ tem valor máximo nos pontos $k = 1$ e $k=n-1$ (e atinge o mínimo quando $k$ está próximo de $n/2$). O último passo da prova está correto pois quando $n>3$ tem-se $-5*n+17 \leq0$.
+
+A recorrência pode ser reescrita como $T(n) = 5n+7+ max _{\text{0} \leq \text{k} \leq \text{n}} (T(k)+T(n-k) + O(n)$ daí se deduz que $T(n)$ está em $O(n^2)$. Conclusão: no pior caso, o algoritmo {\it quickSort} é quadratico.  
+
+\subsection{Desempenho típico e melhor caso do quicksort}
+
+O melhor desempenho do Quicksort ocorre quando todas as invocações de {\it partition} dividem o vetor na proporção $(1/2)$-para-$(1/2)$, ou seja, quando todas as invocações devolvem um índice que está a meio caminho entre $p$ e $r$.  O consumo de tempo do algoritmo nesse caso, digamos $S(n)$, satisfaz a recorrência
+\[S(n) = S(\lceil{}n/2\rceil{})+S(\lfloor{}n/2\rfloor{}) + 5*n + 7\] 
+
+para todo natural $n \geq 2$, podemos mostrar que
+\[S(n) \leq 12*n\log_{2}n\]
+para todo natural $n \geq 3$
+
+O comportamento não é muito diferente quando o vetor é dividido de maneira menos equilibrada.  Suponha, por exemplo, que todas as invocações de Separe dividem o vetor na proporção $(1/9)$-para-$(8/9)$.  Nesse caso, o consumo de tempo, digamos $R(n)$, satisfaz recorrência da forma
+
+\[R(n) = R(\lceil{}n/9\rceil{})+R(\lfloor{}(8*n)/9\rfloor{} +5*n + 7\]
+
+para todo natural $n \geq 2$. Mostremos que 
+
+\[R(n) = \leq 7*n\log_{9/8}n\] 
+
+para todo $n \geq 2$.  Supondo $R(1) = 1$, é fácil verificar que a desigualdade vale quando $n = 2, 3$.  Agora tome $n \geq 4$. Então, por hipótese de indução, e usando sempre $\log$ na base $9/8$,
+
+\[R(n) = 7*\lceil{}n/9\rceil{}*\log\lceil{}n/9\rceil{}+7*\lfloor{}(8*n)/9\rfloor{}*\log\lfloor{}(8*n)/9\rfloor{} +5*n + 7\]
+\[ \leq 7*\lceil{}n/9\rceil{} + \log\lfloor{}(8*n)/9\rfloor{}+7*\lfloor{}(8*n)/9\rfloor{}*\log\lfloor{}(8*n)/9\rfloor{} +5*n + 7\]
+\[ = 7*n\log(n) + 7*n\log(8/9) + 5*n+7\]
+\[ = 7*n\log(n) - 7*n + 5*n+7\]
+\[ = 7*n\log(n) -2*n +7\]
+\[ < 7*n \log(n)\]
+
+
+A análise dos dois casos acima — a divisão na proporção $(1/2)$-para-$(1/2)$ e a divisão na proporção $(1/9)$-para-$(8/9)$ — sugere a seguinte conclusão:  se Separe sempre divide o vetor em alguma proporção $tn$-para-$(1−t)n$, o consumo de tempo do Quicksort é $O(n\log_{2}(n))$ 
+
+
+As conclusões valem mesmo que o valor de $t$ seja diferente em cada invocação de {\it partition}.  Essas observações sugerem que o consumo de tempo típico do {\it quicksort} está em $O(n\log_{2}(n))$.
+
+\chapter{Resultados}
+\section{Tabelas}
+
+\input{../quicksort/tabelas/quicksortAleatorio.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortAleatorio0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor aleatório.}
+Tendo a função $T(n) = 2.178\mathrm{e}-5*n-0.0007707$ e para o $n =2^{32}$, $T(2^{32}) = 93544.3869$ 
+\label{fig:quicksortAleatorio0}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortAleatorio1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor aleatório1.}
+Tendo a função $T(n) = 3.413\mathrm{e}-5*n^2+1.279*n+10.39$ e para o $n =2^{32}$, $T(2^{32}) = 6.1355* 10^{303}$ 
+\label{fig:quicksortAleatorio1}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortCrescente.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortCrescente0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente0}
+Tendo a função $T(n) = 2.214\mathrm{e}-5*n-0.000609$ e para o $n =2^{32}$, $T(2^{32}) =  95090.57532444$ 
+\label{fig:quicksortCrescente0}
+\end{figure}
+
+Tendo a função $T(n) = 2.214\mathrm{e}-5*n-0.000609$ e para o $n =2^{32}$, $T(2^{32}) = 95090.57532444$ 
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortCrescente1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente1}
+Tendo a função $T(n) = 6.261\mathrm{e}-5*n^2+0.9833*n+155$ e para o $n =2^{32}$, $T(2^{32}) = 1.1255 * 10^{304}$ 
+
+\label{fig:quicksortCrescente1}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortDecrescente.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortDecrescente0.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente0}
+Tendo a função $T(n) = 1.956\mathrm{e}-5*n-0.00001127$ e para o $n =2^{32}$, $T(2^{32}) = 84009.56029849$ 
+\label{fig:quicksortDecrescente0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortDecrescente1.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente1}
+Tendo a função $T(n) = 6.438\mathrm{e}-5*n^2+0.9684*n +120.5$ e para o $n =2^{32}$, $T(2^{32}) = 1.15735* 10^{304}$ 
+\label{fig:quicksortDecrescente1}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortQuaseCresc10.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc100.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente100}
+Tendo a função $T(n) = 1.964\mathrm{e}-5*n+0.0002103$ e para o $n =2^{32}$, $T(2^{32}) = 84353.15790374$ 
+\label{fig:quicksortQuaseCresc100}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc101.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente101}
+
+Tendo a função $T(n) = 6.595\mathrm{e}-5*n^2+0.9542*n+126.8$ e para o $n =2^{32}$, $T(2^{32}) = 1.1855*10^{304}$ 
+
+\label{fig:quicksortQuaseCresc101}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortQuaseCresc20.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc200.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente200}
+Tendo a função $T(n) = 2.179\mathrm{e}-5*n-0.0005954$ e para o $n =2^{32}$, $T(2^{32}) = 93587.33678444$ 
+
+\label{fig:quicksortQuaseCresc200}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc201.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente201}
+Tendo a função $T(n) = 6.385\mathrm{e}-5*n^2+0.9726*n+111.9$ e para o $n =2^{32}$, $T(2^{32}) = 1.14782*10^{304}$ 
+\label{fig:quicksortQuaseCresc201}
+\end{figure}
+
+\clearpage
+\input{../quicksort/tabelas/quicksortQuaseCresc30.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc300.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente300}
+Tendo a função $T(n) = 2.157\mathrm{e}-5*n-0.0006331$ e para o $n =2^{32}$, $T(2^{32}) = 92642.44394162$ 
+\label{fig:quicksortQuaseCresc300}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc301.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente301}
+
+Tendo a função $T(n) = 6.201\mathrm{e}-5*n^2 + 0.9894*n+113.5$ e para o $n =2^{32}$, $T(2^{32}) = 1.1438 × 10^{15}$ 
+
+\label{fig:quicksortQuaseCresc301}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortQuaseCresc40.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc400.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente400}
+
+Tendo a função $T(n) = 1.827\mathrm{e}-5*n+0.0003519$ e para o $n =2^{32}$, $T(2^{32}) = 78469.05284982$ 
+
+\label{fig:quicksortQuaseCresc400}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc401.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente401}
+Tendo a função $T(n) = 6.472\mathrm{e}-5*n^2+0.9638*n+126$ e para o $n =2^{32}$, $T(2^{32}) = 1.1634 × 10^{304}$ 
+
+\label{fig:quicksortQuaseCresc401}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortQuaseCresc50.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc500.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente500}
+
+Tendo a função $T(n) = 2.02\mathrm{e}-5*n-9.386\mathrm{e}-05$ e para o $n =2^{32}$, $T(2^{32}) = 86758.33928534$ 
+
+\label{fig:quicksortQuaseCresc500}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseCresc501.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor crescente501}
+
+Tendo a função $T(n) = 6.32\mathrm{e}-5*n^2+0.979*n+118.4$ e para o $n =2^{32}$, $T(2^{32}) = 1.13614*10^{304}$ 
+
+\label{fig:quicksortQuaseCresc501}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortQuaseDecresc10.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc100.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente100}
+
+Tendo a função $T(n) = 2.175\mathrm{e}-5*n - 0.0003901$ e para o $n =2^{32}$, $T(2^{32}) = 93415.5382$ 
+
+\label{fig:quicksortQuaseDecresc100}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc101.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente101}
+
+
+Tendo a função $T(n) = 6.283\mathrm{e}-5*n^2+0.9802*n+120.8$ e para o $n =2^{32}$, $T(2^{32}) = 4.75507*10^{313}$ 
+
+\label{fig:quicksortQuaseDecresc101}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortQuaseDecresc20.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc200.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente101}
+
+Tendo a função $T(n) = 1.975\mathrm{e}-5*n+0.0006473$ e para o $n =2^{32}$, $T(2^{32}) = 84825.6047433$ 
+
+\label{fig:quicksortQuaseDecresc200}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc201.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente201}
+
+Tendo a função $T(n) = 6.473\mathrm{e}-5*n^2+0.966*n + 116.3$ e para o $n =2^{32}$, $T(2^{32}) = 84825.6047433$ 
+
+\label{fig:quicksortQuaseDecresc201}
+\end{figure}
+
+\clearpage
+\input{../quicksort/tabelas/quicksortQuaseDecresc30.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc300.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente300}
+
+Tendo a função $T(n) = 1.902\mathrm{e}-5*n+0.0002766$ e para o $n =2^{32}$, $T(2^{32}) = 81690.27824652$ 
+
+\label{fig:quicksortQuaseDecresc300}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc301.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente301}
+
+Tendo a função $T(n) = 6.368\mathrm{e}-5*n+120.6$ e para o $n =2^{32}$, $T(2^{32}) = 273624.11740928$ 
+
+\label{fig:quicksortQuaseDecresc301}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortQuaseDecresc40.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc400.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente400}
+
+Tendo a função $T(n) = 1.908\mathrm{e}-5*n+0.000421$ e para o $n =2^{32}$, $T(2^{32}) = 81947.97642868$ 
+
+\label{fig:quicksortQuaseDecresc400}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc401.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente401}
+
+Tendo a função $T(n) = 6.36\mathrm{e}-5*n+0.976*n+114.3$ e para o $n =2^{32}$, $T(2^{32}) = 4.1921*10^9$
+
+\label{fig:quicksortQuaseDecresc401}
+\end{figure}
+
+
+\input{../quicksort/tabelas/quicksortQuaseDecresc50.tex}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc500.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente500}
+
+Tendo a função $T(n) = 2.201\mathrm{e}-5*n-0.0007025$ e para o $n =2^{32}$, $T(2^{32}) = 94532.22948246$
+
+\label{fig:quicksortQuaseDecresc500}
+\end{figure}
+
+\begin{figure}[ht]
+\centering \includegraphics[scale=0.8]{../quicksort/imagens/quicksortQuaseDecresc501.png}
+\caption{A análise do grafico para $2^{32}$ segue abaixo para quicksort de vetor decrescente501}
+
+Tendo a função $T(n) = 6.35\mathrm{e}-5*n^2+0.9761*n+117.1$ e para o $n =2^{32}$, $T(2^{32}) = 1.141535*10^{304}$
+
+\label{fig:quicksortQuaseDecresc501}
+\end{figure}
+
+
+\clearpage
+\clearpage
+\addcontentsline{toc}{part}{Apêndice}
+\appendix
+
+\chapter{Arquivo ../quicksort/quicksort.py \label{ap:quicksort}}
+\lstinputlisting[caption={../quicksort/quicksort.py \label{arq:quicksort}}]{../quicksort/quicksort.py}
+
+\chapter{Arquivo ../quicksort/ensaio.py \label{ap:quicksortensaio}}
+\lstinputlisting[caption={../quicksort/ensaio.py \label{arq:quicksortensaio}}]{../quicksort/ensaio.py}
+
+\end{document}

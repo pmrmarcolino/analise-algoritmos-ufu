@@ -1,0 +1,10 @@
+\select@language {brazil}
+\contentsline {chapter}{Lista de Figuras}{2}{chapter*.1}
+\contentsline {chapter}{Lista de Tabelas}{3}{chapter*.2}
+\contentsline {chapter}{\numberline {1}An\IeC {\'a}lise}{6}{chapter.1}
+\contentsline {chapter}{\numberline {2}Resultados}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Tabelas}{7}{section.2.1}
+\contentsline {part}{Ap\IeC {\^e}ndice}{36}{figure.caption.43}
+\contentsline {chapter}{\numberline {A}Arquivo ../heapsort/heapsort.py }{36}{appendix.A}
+\contentsline {chapter}{\numberline {B}Arquivo ../heapsort/ensaio.py }{37}{appendix.B}
+\contentsfinish 
