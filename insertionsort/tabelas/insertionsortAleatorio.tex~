@@ -1,0 +1,18 @@
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrr} \toprule
+        n &    comparações &       tempo(s) \\ \midrule
+      32  &            246 &      0.000429 \\
+      64  &           1198 &      0.002261 \\
+     128  &           3972 &      0.006838 \\
+     256  &          17243 &      0.028853 \\
+     512  &          63815 &      0.107184 \\
+    1024  &         273058 &      0.475987 \\
+    2048  &        1042036 &      1.754090 \\
+    4096  &        4218451 &      7.347100 \\
+    8192  &       16829955 &     29.830400 \\
+\bottomrule\addlinespace
+\end{tabular}
+\caption{Tabela com vetor teste quase aleatorio 10\%: a linha de interesse analisada para este caso é a 15}
+\label{tab:insertionsortAleatorio}
+\end{table}

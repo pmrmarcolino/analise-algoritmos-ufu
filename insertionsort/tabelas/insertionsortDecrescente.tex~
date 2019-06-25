@@ -1,0 +1,18 @@
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrr} \toprule
+        n &    comparações &       tempo(s) \\ \midrule
+      32  &            527 &      0.000891 \\
+      64  &           2079 &      0.003690 \\
+     128  &           8255 &      0.013381 \\
+     256  &          32895 &      0.057177 \\
+     512  &         131327 &      0.218671 \\
+    1024  &         524798 &      0.926999 \\
+    2048  &        2098128 &      3.908480 \\
+    4096  &        8388463 &     14.543500 \\
+    8192  &       33545751 &     60.686100 \\
+\bottomrule\addlinespace
+\end{tabular}
+\caption{Explique essa tabela: insertionsortDecrescente}
+\label{tab:insertionsortDecrescente}
+\end{table}

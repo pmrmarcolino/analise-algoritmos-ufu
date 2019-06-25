@@ -1,0 +1,18 @@
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrr} \toprule
+        n &    comparações &       tempo(s) \\ \midrule
+      32  &             59 &      0.000135 \\
+      64  &            194 &      0.000384 \\
+     128  &            659 &      0.001200 \\
+     256  &           2488 &      0.004470 \\
+     512  &           9324 &      0.016472 \\
+    1024  &          41236 &      0.080867 \\
+    2048  &         157263 &      0.290764 \\
+    4096  &         621980 &      1.064370 \\
+    8192  &        2421387 &      4.308140 \\
+\bottomrule\addlinespace
+\end{tabular}
+\caption{Explique essa tabela: insertionsortQuaseCresc40}
+\label{tab:insertionsortQuaseCresc40}
+\end{table}
