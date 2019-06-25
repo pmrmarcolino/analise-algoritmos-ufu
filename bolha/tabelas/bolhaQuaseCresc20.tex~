@@ -1,0 +1,18 @@
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrr} \toprule
+        n &    comparações &       tempo(s) \\ \midrule
+      32  &            496 &      0.000580 \\
+      64  &           2016 &      0.002290 \\
+     128  &           8128 &      0.009233 \\
+     256  &          32640 &      0.036300 \\
+     512  &         130816 &      0.143595 \\
+    1024  &         523776 &      0.555577 \\
+    2048  &        2096128 &      2.317520 \\
+    4096  &        8386560 &      9.365210 \\
+    8192  &       33550336 &     39.829700 \\
+\bottomrule\addlinespace
+\end{tabular}
+\caption{Explique essa tabela: bolhaQuaseCresc20}
+\label{tab:bolhaQuaseCresc20}
+\end{table}

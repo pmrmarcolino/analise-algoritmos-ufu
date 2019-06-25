@@ -1,0 +1,18 @@
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrr} \toprule
+        n &    comparações &       tempo(s) \\ \midrule
+      32  &            496 &      0.000574 \\
+      64  &           2016 &      0.002152 \\
+     128  &           8128 &      0.009420 \\
+     256  &          32640 &      0.033514 \\
+     512  &         130816 &      0.163590 \\
+    1024  &         523776 &      0.554991 \\
+    2048  &        2096128 &      2.162600 \\
+    4096  &        8386560 &      8.656440 \\
+    8192  &       33550336 &     35.559200 \\
+\bottomrule\addlinespace
+\end{tabular}
+\caption{Tabela com vetor teste quase aleatório 10\%: a linha de interesse analisada para este caso é a 15}
+\label{tab:bolhaQuaseCresc10}
+\end{table}

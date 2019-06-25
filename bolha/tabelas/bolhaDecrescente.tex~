@@ -1,0 +1,18 @@
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrr} \toprule
+        n &    comparações &       tempo(s) \\ \midrule
+      32  &            496 &      0.001386 \\
+      64  &           2016 &      0.005775 \\
+     128  &           8128 &      0.022430 \\
+     256  &          32640 &      0.088820 \\
+     512  &         130816 &      0.383981 \\
+    1024  &         523776 &      1.439680 \\
+    2048  &        2096128 &      5.957860 \\
+    4096  &        8386560 &     21.605700 \\
+    8192  &       33550336 &     93.107000 \\
+\bottomrule\addlinespace
+\end{tabular}
+\caption{Explique essa tabela: bolhaDecrescente}
+\label{tab:bolhaDecrescente}
+\end{table}
